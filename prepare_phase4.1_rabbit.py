@@ -31,11 +31,11 @@ try:
 		payload = []
     		for links in soup.find("article", { "class" : "text" }).findAll("p"):
                 	payload.append(links.text)
-			data = { 
-				'_id' : body,
-				'doc': payload 
-				}
-			my_document = db.create_document(data)
+		data = { 
+			'_id' : body,
+			'doc': payload 
+			}
+		my_document = db.create_document(data)
 		time.sleep(2)
 		#else:
 		#	 my_document = None
