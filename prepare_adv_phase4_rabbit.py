@@ -30,15 +30,39 @@ try:
     		soup = BeautifulSoup(PageFile.content, "html.parser")
 		adv = []
 		oab = []
+		avaliacao = []
 		for x in soup.findAll("ul", { "class" : "lawyers pro" }):   
 	     		for y in x.findAll("li"):
 	             		for z in y.findAll("div", { "class" : "title" }):
 	                     		adv.append(z.text.split('  ')[1])
 	                     		oab.append(z.text.split('  ')[2])
+                for x in soup.findAll("ul", { "class" : "lawyers pro" }):
+                        for y in x.findAll("li"):
+                                for z in y.findAll("div", { "class" : "activity-stats" }):
+                                	for w in x.findAll("span", { "class" : "evaluation-stats" }):
+	                                        avaliacao.append(w.find("span", {"class": "evaluation-stats-link-info"}).get("data-label"))
 		for aa in range(0,len(adv)):
+			try:
+				nroab = oab[aa].split(' ')[2].split('/')[0]
+			except:
+				nroab = "nao informado"
+			try:
+				estado = oab[aa].split(' ')[2].split('/')[1]
+			except:
+				estado = "nao informado"	
+			try:
+				advogado = adv[aa]
+			except:
+				advogado = "nao informado"
+			try:
+				rate = avaliacao[aa].split(' ')[0]
+			except:
+				rate = "nao informado"
 			data = { 
-				'advogado': adv[aa],
-				'oab' : oab[aa]
+				'advogado': advogado,
+				'oab' : nroab,
+				'estado' : estado,
+				'avaliacao' : rate
 				}
 			my_document = db.create_document(data)
 		time.sleep(2)

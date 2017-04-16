@@ -1,4 +1,4 @@
-import requests, re, redis, os, pika, traceback
+import requests, sys, re, redis, os, pika, traceback
 
 
 RABBIT = str(os.getenv('RABBIT'))
@@ -22,7 +22,7 @@ try:
         channel.queue_declare(queue="jusbrasil_adv_phase3", durable=True, auto_delete=False)
         channel.queue_bind(queue="jusbrasil_adv_phase3",exchange="jus_exchange_adv_phase3",routing_key='')
 	for x in range(1,51):
-        	channel.basic_publish(exchange="jus_exchange_adv_phase3", routing_key='' ,  body="https://www.jusbrasil.com.br/advogados/rj/?rand=41481&p="+str(x), properties=pika.BasicProperties(delivery_mode = 2,))
+        	channel.basic_publish(exchange="jus_exchange_adv_phase3", routing_key='' ,  body=sys.argv[1]+str(x), properties=pika.BasicProperties(delivery_mode = 2,))
         channel.close()
         connection.close()
 except:
