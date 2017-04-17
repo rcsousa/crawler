@@ -5,7 +5,7 @@ import requests, re, redis, os, pika
 RABBIT = str(os.getenv('RABBIT'))
 
 #Rotina para pegar a quantidade total de registros da busca
-PageFile = requests.get("https://www.jusbrasil.com.br/busca?q=senten%C3%A7a+Ita%C3%BA+Unibanco+s%2Fa")
+PageFile = requests.get("https://xxxxxxxxxxxxxxxx")
 soup = BeautifulSoup(PageFile.content, "html.parser")
 total = soup.find("span", { "class" : "total-results" })
 records = int(total.contents[0].replace('.',''))
@@ -19,7 +19,7 @@ for i in range(1,pages):
         #params.socket_timeout = 5
         connection = pika.BlockingConnection(params)
         channel = connection.channel()
-	payload = "https://www.jusbrasil.com.br/busca?q=senten%C3%A7a+Ita%C3%BA+Unibanco+s%2Fa&p="+str(i)
+	payload = "https://xxxxxxxxxxxxxxxx"+str(i)
 	channel.exchange_declare(exchange="jus_exchange_phase1", exchange_type='fanout', durable=True,auto_delete=False)
         channel.queue_declare(queue="jusbrasil_phase1", durable=True, auto_delete=False)
         channel.queue_bind(queue="jusbrasil_phase1",exchange="jus_exchange_phase1",routing_key='')

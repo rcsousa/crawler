@@ -18,7 +18,7 @@ url = []
 list = []
 
 #Rotina para pegar a quantidade total de registros da busca
-PageFile = requests.get("https://www.jusbrasil.com.br/busca?q=senten%C3%A7a+Ita%C3%BA+Unibanco+s%2Fa")
+PageFile = requests.get("https://xxxxxxxxxxxxxxxx")
 soup = BeautifulSoup(PageFile.content, "html.parser")
 total = soup.find("span", { "class" : "total-results" })
 records = int(total.contents[0].replace('.',''))
@@ -28,7 +28,7 @@ pages = records/10000
 
 #Carregamento de todas as paginas HTML no array "URL"
 for i in range(1,pages):
-    PageFile = requests.get("https://www.jusbrasil.com.br/busca?q=senten%C3%A7a+Ita%C3%BA+Unibanco+s%2Fa&p="+str(i))
+    PageFile = requests.get("https://xxxxxxxxxxxxxxxx"+str(i))
     url.append(PageFile)
 
 #Parsing de todos os HTMLs para identificacao dos links ('href')
